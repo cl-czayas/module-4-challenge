@@ -1,4 +1,4 @@
-var questionsEl = document.querySelector("#questions");
+var questionsEl = document.querySelector("#question-box");
 var countdownEl = document.querySelector("#time");
 var choicesEl = document.querySelector("#choices");
 var beginButton = document.querySelector("#begin");
@@ -35,3 +35,17 @@ var questions=[
     answer: "the DOM"
     }
 ]
+
+var timer;
+var count = questions.length * 10;
+
+beginButton.addEventListener("click", function() {
+    var startBox = document.getElementById("start-box");
+    startBox.setAttribute("class", "hidden");
+    questionsEl.removeAttribute("class");
+
+    var timer = setInterval(clockTick, 1000);
+
+    countdownEl.innerHTML = count;
+}
+)
