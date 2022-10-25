@@ -36,16 +36,51 @@ var questions=[
     }
 ]
 
-var timer;
 var count = questions.length * 10;
+var qIndex = 0;
+var questionH = document.querySelector("#qHeading")
+
+function askQuestion() {
+
+    var questionAsked = questions[qIndex];
+    questionH.textContent = questionAsked.inquiry;
+
+    choicesEl.innerHTML = "";
+
+    questionAsked.choices.forEach(function(choice, i) {
+        var choiceBtn = document.createElement("button");
+        choiceBtn.setAttribute("class", "choice");
+        choiceBtn.setAttribute("value", choice);
+    
+        choiceBtn.textContent = choice;
+    
+        choiceBtn.addEventListener("click", chooseAnswer());
+    
+        choicesEl.appendChild(choiceBtn);
+        });
+    }
+
+function chooseAnswer() {
+    if (this.value == questions[qIndex].answer) {
+        qIndex++;
+        chooseAnswer();}
+}
+
+function clockTick() {
+    count--;
+    countdownEl.textContent = count;
+}
 
 beginButton.addEventListener("click", function() {
     var startBox = document.getElementById("start-box");
     startBox.setAttribute("class", "hidden");
-    questionsEl.removeAttribute("class");
+    questionsEl.setAttribute("class", "shown")
+    
 
-    var timer = setInterval(clockTick, 1000);
+    setInterval(clockTick, 1000);
 
-    countdownEl.innerHTML = count;
+    countdownEl.textContent = count;
+
+    askQuestion()
 }
 )
